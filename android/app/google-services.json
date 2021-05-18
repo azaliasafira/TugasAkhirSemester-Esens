@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "498218264188",
+    "project_id": "e-sens-d37e6",
+    "storage_bucket": "e-sens-d37e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498218264188:android:75ab952f68b741785e0bf9",
+        "android_client_info": {
+          "package_name": "com.example.esens"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498218264188-7gtn6kkn3epv7i4b540qjlhk7vtsp3on.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.esens",
+            "certificate_hash": "2bf4e45d4d4c7a4c33867aaa9331281c9bae12a1"
+          }
+        },
+        {
+          "client_id": "498218264188-2t7dh3pfg3fek7tn0dpp2tfe1h8gh7hv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4-5clT88E2LH6oneIUoSBIsfU81zY32g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498218264188-2t7dh3pfg3fek7tn0dpp2tfe1h8gh7hv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
