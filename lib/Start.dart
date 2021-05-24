@@ -1,5 +1,7 @@
+import 'package:esens/SignIn.dart';
 import 'package:flutter/material.dart';
 import 'package:sign_button/sign_button.dart';
+import 'package:esens/HomePage.dart';
 
 class Start extends StatefulWidget {
   @override
@@ -80,7 +82,17 @@ class _StartState extends State<Start> {
                 buttonType: ButtonType.google,
                 buttonSize: ButtonSize.medium,
                 onPressed: () {
-                  print('click');
+                  signInWithGoogle().then((result) {
+                    if (result != null) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return HomePage();
+                          },
+                        ),
+                      );
+                    }
+                  });
                 })
           ],
         ),
