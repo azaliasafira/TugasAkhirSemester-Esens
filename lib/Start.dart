@@ -2,6 +2,7 @@ import 'package:esens/SignIn.dart';
 import 'package:flutter/material.dart';
 import 'package:sign_button/sign_button.dart';
 import 'package:esens/HomePage.dart';
+import 'package:esens/Login.dart';
 
 class Start extends StatefulWidget {
   @override
@@ -48,7 +49,19 @@ class _StartState extends State<Start> {
               children: <Widget>[
                 RaisedButton(
                     padding: EdgeInsets.only(left: 30, right: 30),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Login()),
+                      );
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) {
+                      //       return Login();
+                      //     },
+                      //   ),
+                      // );
+                    },
                     child: Text(
                       'LOGIN',
                       style: TextStyle(
