@@ -100,7 +100,7 @@ class _StartState extends State<Start> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) {
-                            return HomePage();
+                            return HomePage(id);
                           },
                         ),
                       );

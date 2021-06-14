@@ -1,15 +1,40 @@
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:esens/SignIn.dart';
 import 'package:esens/WargaBaru.dart';
 import 'package:esens/WargaLama.dart';
 import 'package:esens/Start.dart';
-import 'package:esens/models/warga_lama.dart';
-import 'package:esens/providers/wargaLama_provider.dart';
+import 'package:esens/drawerNav.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:esens/models/warga_lama.dart';
+// import 'package:esens/providers/wargaLama_provider.dart';
 import 'package:flutter/material.dart';
 
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  final id;
+  static String tag = 'home';
+  HomePage(this.id);
+  _HomePageState createState() => _HomePageState();
+  }
+  
+  class _HomePageState extends State<HomePage> {
+    int _current = 0;
+
+  List<T> map<T>(List list, Function handler) {
+    List<T> result = [];
+    for (var i = 0; i < list.length; i++) {
+      result.add(handler(i, list[i]));
+    }
+    return result;
+}
   @override
   Widget build(BuildContext context) {
+    String s;
+    final User userArgs = ModalRoute.of(context).settings.arguments;
+    if (userArgs != null) {
+      s = userArgs.uid;
+    }
       return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.orange,
@@ -25,22 +50,7 @@ class HomePage extends StatelessWidget {
                 onPressed: () {})
             ],
           ),
-
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            onTap: (index) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Start()),
-              );
-            },
-            items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home")),
-              BottomNavigationBarItem(icon: Icon(Icons.logout_rounded), title: Text("Logout"),
-              ),
-            ]
-          ),
+          drawer: DrawerNav(),
           body: ListView(
             children: < Widget > [
               SizedBox(
@@ -54,6 +64,11 @@ class HomePage extends StatelessWidget {
                   dotBgColor: Colors.transparent,
                   dotVerticalPadding: 5.0,
                   dotPosition: DotPosition.bottomCenter,
+                  onImageTap: (index) {
+                    setState(() {
+                    _current = index;
+                  });
+                  },
                   images: [
                     Image.asset(
                       'images/1.jpg',
@@ -68,6 +83,7 @@ class HomePage extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ],
+
                 ),
               ),
               Padding(
@@ -102,7 +118,7 @@ class HomePage extends StatelessWidget {
                               Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Wargalama()),
+                                builder: (context) => Wargalama(id)),
                             );
                             },
                           
@@ -142,11 +158,10 @@ class HomePage extends StatelessWidget {
                           child: InkWell(
                             splashColor: Colors.orange[50].withAlpha(30),
                             onTap: (){
-                              Navigator.push(
-                              context,
+                              Navigator.push(context,
                               MaterialPageRoute(
-                                builder: (context) => Wargabr()),
-                            );
+                              builder: (context) => Wargabaru(id),
+                            ));
                             },
                           child: Padding(
                             padding: EdgeInsets.all(8.0),
@@ -180,4 +195,4 @@ class HomePage extends StatelessWidget {
                 ),
               );
             }
-          }
+  }
