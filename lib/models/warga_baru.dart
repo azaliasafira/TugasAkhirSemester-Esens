@@ -1,32 +1,45 @@
 class WargaB{
-  final String id;
-  final String nik;
-  final String noKK;
-  final String nama;
-  final String jk;
+  int _id;
+  String _nikWB;
+  String _noKKWB;
+  String _namaWB;
+  String _jkWB;
 
-  WargaB({
-    this.id,
-    this.nik,
-    this.noKK,
-    this.nama,
-    this.jk,
-  });
+  int get id => this._id;
 
-    Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'nik': nik,
-      'noKK': noKK,
-      'jk': jk,
-      'nama': nama,
-    };
+  String get nikWB => this.nikWB;
+  set nikWB(String value) => this._nikWB = value;
+
+  String get noKKWB => this._noKKWB;
+  set noKK(String value) => this._noKKWB = value;
+
+  String get namaWB => this._namaWB;
+  set namaWB(String value) => this._namaWB = value;
+
+  String get jkWB => this._jkWB;
+  set jkWB(String value) => this._jkWB = value;
+  
+  //Konstruktor 1 
+  WargaB(this._nikWB, this._noKKWB, this._namaWB, this._jkWB);
+
+  // Konstruktor 2 : Map -> Item 
+  WargaB.fromMap(Map<String, dynamic> map) {
+    this._id = map['id'];
+    this._nikWB = map['nikWB'];
+    this._noKKWB = map['noKKWB'];
+    this._namaWB = map['namaWB'];
+    this._jkWB = map['jkWB'];
   }
 
-  WargaB.fromFirestore(Map<String, dynamic> firestore)
-      : id = firestore['id'],
-        nik = firestore['nik'],
-        noKK = firestore['noKK'],
-        jk = firestore['jk'],
-        nama = firestore['nama'];
+  //Konversi Item -> Map
+  Map<String, dynamic>toMap() {
+    Map<String, dynamic> map = Map<String, dynamic>();
+    map['id'] = this._id;
+    map['nikWB'] = this._nikWB;
+    map['noKKWB'] = this._noKKWB;
+    map['namaWB'] = this._namaWB;
+    map['jkWB'] = this._jkWB;
+    return map;
+  }
+
 }

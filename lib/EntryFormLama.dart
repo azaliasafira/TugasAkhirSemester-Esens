@@ -1,27 +1,37 @@
-import 'package:esens/models/warga_lama.dart';
-import 'package:esens/providers/wargaLama_provider.dart';
+// import 'package:esens/models/warga_lama.dart';
+// import 'package:esens/providers/wargaLama_provider.dart';
+import 'package:esens/service/firestore_ser.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:ffi';
+// import 'package:provider/provider.dart';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
+// import 'dart:ffi';
 
 
 class EntryFormLama extends StatefulWidget {
-  final WargaL wargaLama;
-  EntryFormLama([this.wargaLama]);
-
+  final String nik;
+  final String noKK;
+  final String nama;
+  final String jk;
+  final String id;
+  final String docId;
+  EntryFormLama(this.nik, this.noKK, this.nama, this.jk, this.id, this.docId);
   @override
-  EntryFormLamaState createState() => EntryFormLamaState();
+  EntryFormLamaState createState() => EntryFormLamaState(this.nik, this.noKK, this.nama, this.jk, id, docId);
 }
 
 class EntryFormLamaState extends State<EntryFormLama> {
-  final nikController = TextEditingController();
-  final noKKController = TextEditingController();
-  final namaController = TextEditingController();
-  final jkController = TextEditingController();
-  String _uploadedFileURL; 
-  FileImage _image;
+  String nik;
+  String noKK;
+  String nama;
+  String jk;
+  String id;
+  String docId;
+  EntryFormLamaState(String nik, String noKK, String nama, String jk, String id, String docId);
+  TextEditingController nikController = TextEditingController();
+  TextEditingController noKKController = TextEditingController();
+  TextEditingController namaController = TextEditingController();
+  TextEditingController jkController = TextEditingController();
   
     @override
     void dispose() {
@@ -31,37 +41,16 @@ class EntryFormLamaState extends State<EntryFormLama> {
       jkController.dispose();
       super.dispose();
     }
-  
-    @override
-    void initState(){
-      if(widget.wargaLama == null){
-        nikController.text = "";
-        noKKController.text = "";
-        namaController.text = "";
-        jkController.text = "";
-        new Future.delayed(Duration.zero, () {
-          final wargaBaruProvider =
-              Provider.of<WargaLamaProvider>(context, listen: false);
-          wargaBaruProvider.loadValues(WargaL());
-        });
-      } else {
-        //Controller Update
-        nikController.text = widget.wargaLama.nik;
-        noKKController.text = widget.wargaLama.noKK;
-        namaController.text = widget.wargaLama.nama;
-        //State Update
-        new Future.delayed(Duration.zero, () {
-          final mapelProvider =
-              Provider.of<WargaLamaProvider>(context, listen: false);
-          mapelProvider.loadValues(widget.wargaLama);
-        });
-      }
-      super.initState();
-    }
-  
+    
     @override
     Widget build(BuildContext context) {
-      final wargaLamaProvider = Provider.of<WargaLamaProvider>(context);
+      //kondisi
+        if (nik != null) {
+          nikController.text = nik;
+          noKKController.text = noKK;
+          namaController.text = nama;
+          jkController.text = jk;
+        }
   
       return Scaffold(
         appBar: AppBar(
@@ -80,20 +69,30 @@ class EntryFormLamaState extends State<EntryFormLama> {
                 child: TextField(
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    labelText: 'NIK'
+                    labelText: 'NIK',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
                   ),
-                  onChanged: (value) => wargaLamaProvider.changeNIK(value),
+                  onChanged: (value) {
+
+                  }
                 ),
               ),
               //noKK
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: TextField(
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    labelText: 'Nomor Kartu Keluarga'
+                    labelText: 'Nomor Kartu Keluarga',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
                   ),
-                  onChanged: (value) => wargaLamaProvider.changeNoKK(value),
+                  onChanged: (value) {
+
+                  }
                 ),
               ),
               //nama
@@ -102,9 +101,14 @@ class EntryFormLamaState extends State<EntryFormLama> {
                 child: TextField(
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    labelText: 'Nama'
+                    labelText: 'Nama',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
                   ),
-                  onChanged: (value) => wargaLamaProvider.changeNama(value),
+                  onChanged: (value) {
+
+                  }
                 ),
               ),
               //jenis kelamin
@@ -113,16 +117,17 @@ class EntryFormLamaState extends State<EntryFormLama> {
                 child: TextField(
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
-                    labelText: 'Jenis Kelamin'
+                    labelText: 'Jenis Kelamin',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
                   ),
-                  onChanged: (value) => wargaLamaProvider.changeJk(value),
+                  onChanged: (value) {
+
+                  }
                 ),
               ),
 
-              
-              
-              
-  
               //button
               Padding(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
@@ -142,29 +147,43 @@ class EntryFormLamaState extends State<EntryFormLama> {
                         ),
                           ),
                           onPressed: () {
-                            wargaLamaProvider.saveWargaLama();
-                            Navigator.of(context).pop();
+                            if (nik == null) {
+                              Firestore.addItemWargaLama(
+                                id: id.toString(),
+                                nik: nikController.text,
+                                noKK: noKKController.text,
+                                nama: namaController.text,
+                                jk: jkController.text);
+                            } else {
+                              Firestore.updateItemWargaLama(
+                                uid: id.toString(),
+                                nik: nikController.text,
+                                noKK: noKKController.text,
+                                nama: namaController.text,
+                                jk: jkController.text,
+                                docId: docId);
+                            }
+                            Navigator.pop(context);
                           },
                         ),
                       ),
-  
+                        Container(
+                          width: 5.0,
+                        ),
                       // tombol batal
-                        (widget.wargaLama != null)
-                        ? ElevatedButton(
-                          child: Text(
-                            'Delete',
-                            style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        Expanded(
+                          child: RaisedButton(
+                            color: Theme.of(context).primaryColorLight,
+                            textColor: Theme.of(context).primaryColorDark,
+                            child: Text(
+                              'Cancel',
+                              textScaleFactor: 1.5,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            }
+                            ),
                           ),
-                          ),
-                          onPressed: () {
-                            wargaLamaProvider.removeWargaLama(widget.wargaLama.id);
-                            Navigator.of(context).pop();
-                          },
-                        )
-                        : Container(),
                     ]
                   ),
                 ),

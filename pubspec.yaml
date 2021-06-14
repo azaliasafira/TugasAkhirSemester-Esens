@@ -27,12 +27,12 @@ dependencies:
   google_sign_in: any
   sign_button: any
   carousel_pro: any
-  cloud_firestore: ^2.2.0
+  cloud_firestore: ^1.0.2
   provider: ^5.0.0
   uuid: ^3.0.4
   firebase_core: ^1.2.0
-  image_picker: ^0.6.0+17    
-  firebase_storage: any 
+ 
+  
 
 
   cupertino_icons: ^1.0.2
