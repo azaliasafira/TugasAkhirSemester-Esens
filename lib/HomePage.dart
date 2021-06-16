@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   @override
-  final id;
   static String tag = 'home';
+  final id;
   HomePage(this.id);
   _HomePageState createState() => _HomePageState();
   }
@@ -30,11 +30,17 @@ class HomePage extends StatefulWidget {
 }
   @override
   Widget build(BuildContext context) {
-    String s;
+    User us = widget.id;
+    String b;
     final User userArgs = ModalRoute.of(context).settings.arguments;
     if (userArgs != null) {
-      s = userArgs.uid;
+      b = userArgs.uid;
     }
+    else{
+      b = us.uid;
+    }
+    print(b);
+
       return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.orange,
@@ -118,7 +124,7 @@ class HomePage extends StatefulWidget {
                               Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Wargalama(id)),
+                                builder: (context) => Wargalama(b)),
                             );
                             },
                           
@@ -160,7 +166,7 @@ class HomePage extends StatefulWidget {
                             onTap: (){
                               Navigator.push(context,
                               MaterialPageRoute(
-                              builder: (context) => Wargabaru(id),
+                              builder: (context) => Wargabaru(b),
                             ));
                             },
                           child: Padding(

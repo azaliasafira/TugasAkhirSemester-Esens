@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:esens/models/warga_baru.dart';
-// import 'package:esens/models/warga_lama.dart';
+
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _mainCollection = _firestore.collection('notes');
 
-class Firestore {
+class Firestore {  
   static String userUid;
   static Future<void> addItemWargaLama({
      String id,
@@ -15,7 +14,7 @@ class Firestore {
      String jk,
   }) async {
     DocumentReference documentReferencer =
-        _mainCollection.doc(userUid).collection('item').doc();
+        _mainCollection.doc(id).collection('wargaLama').doc();
 
     Map<String, dynamic> data = <String, dynamic>{
       "nik": nik,
@@ -64,9 +63,10 @@ class Firestore {
     }
   ) async {
     DocumentReference documentReferencer = 
-    _mainCollection.doc(uid).collection('item').doc(docId);
+    _mainCollection.doc(uid).collection('wargaLama').doc(docId);
 
     Map<String, dynamic> data = <String, dynamic>{
+      
       "nik": nik,
       "noKK": noKK,
       "nama": nama,
@@ -109,7 +109,7 @@ class Firestore {
     String uid
   ) {
     CollectionReference notesItemCollection =
-        _mainCollection.doc(uid).collection('item');
+        _mainCollection.doc(uid).collection('wargaLama');
 
     return notesItemCollection.snapshots();
   }
@@ -129,7 +129,7 @@ class Firestore {
      String docId,
   }) async {
     DocumentReference documentReferencer =
-        _mainCollection.doc(uid).collection('item').doc(docId);
+        _mainCollection.doc(uid).collection('wargaLama').doc(docId);
 
     await documentReferencer
         .delete()

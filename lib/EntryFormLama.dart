@@ -27,23 +27,24 @@ class EntryFormLamaState extends State<EntryFormLama> {
   String jk;
   String id;
   String docId;
-  EntryFormLamaState(String nik, String noKK, String nama, String jk, String id, String docId);
+  EntryFormLamaState(this.nik, this.noKK, this.nama, this.jk, this.id, this.docId);
   TextEditingController nikController = TextEditingController();
   TextEditingController noKKController = TextEditingController();
   TextEditingController namaController = TextEditingController();
   TextEditingController jkController = TextEditingController();
   
-    @override
-    void dispose() {
-      nikController.dispose();
-      noKKController.dispose();
-      namaController.dispose();
-      jkController.dispose();
-      super.dispose();
-    }
+    // @override
+    // void dispose() {
+    //   nikController.dispose();
+    //   noKKController.dispose();
+    //   namaController.dispose();
+    //   jkController.dispose();
+    //   super.dispose();
+    // }
     
     @override
     Widget build(BuildContext context) {
+      print (id);
       //kondisi
         if (nik != null) {
           nikController.text = nik;
@@ -67,6 +68,7 @@ class EntryFormLamaState extends State<EntryFormLama> {
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: TextField(
+                  controller: nikController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: 'NIK',
@@ -83,6 +85,7 @@ class EntryFormLamaState extends State<EntryFormLama> {
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: TextField(
+                  controller: noKKController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: 'Nomor Kartu Keluarga',
@@ -99,6 +102,7 @@ class EntryFormLamaState extends State<EntryFormLama> {
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: TextField(
+                  controller: namaController,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     labelText: 'Nama',
@@ -115,6 +119,7 @@ class EntryFormLamaState extends State<EntryFormLama> {
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: TextField(
+                  controller: jkController,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     labelText: 'Jenis Kelamin',
@@ -136,10 +141,8 @@ class EntryFormLamaState extends State<EntryFormLama> {
                       // tombol simpan
                       Expanded(
                         child: ElevatedButton(
-                          // color: Theme.of(context).primaryColorDark,
-                          // textColor: Theme.of(context).primaryColorLight,
                           child: Text(
-                            'Save',
+                            'save',
                           style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -149,14 +152,14 @@ class EntryFormLamaState extends State<EntryFormLama> {
                           onPressed: () {
                             if (nik == null) {
                               Firestore.addItemWargaLama(
-                                id: id.toString(),
+                                id: id,
                                 nik: nikController.text,
                                 noKK: noKKController.text,
                                 nama: namaController.text,
                                 jk: jkController.text);
                             } else {
                               Firestore.updateItemWargaLama(
-                                uid: id.toString(),
+                                uid: id,
                                 nik: nikController.text,
                                 noKK: noKKController.text,
                                 nama: namaController.text,

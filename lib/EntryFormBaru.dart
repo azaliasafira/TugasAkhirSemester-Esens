@@ -24,24 +24,25 @@ class EntryFormBaruState extends State<EntryFormBaru> {
   String jk;
   String id;
   String docId;
-  EntryFormBaruState(String nik, String noKK, String nama, String jk, String id, String docId);
+  EntryFormBaruState(this.nik, this.noKK, this.nama, this.jk, this.id, this.docId);
   TextEditingController nikController = TextEditingController();
   TextEditingController noKKController = TextEditingController();
   TextEditingController namaController = TextEditingController();
   TextEditingController jkController = TextEditingController();
   
-    @override
-    void dispose() {
-      nikController.dispose();
-      noKKController.dispose();
-      namaController.dispose();
-      jkController.dispose();
-      super.dispose();
-    }
+    // @override
+    // void dispose() {
+    //   nikController.dispose();
+    //   noKKController.dispose();
+    //   namaController.dispose();
+    //   jkController.dispose();
+    //   super.dispose();
+    // }
     
     @override
     Widget build(BuildContext context) {
       //kondisi
+      print (id);
         if (nik != null) {
           nikController.text = nik;
           noKKController.text = noKK;
@@ -64,6 +65,7 @@ class EntryFormBaruState extends State<EntryFormBaru> {
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: TextField(
+                  controller: nikController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: 'NIK',
@@ -80,6 +82,7 @@ class EntryFormBaruState extends State<EntryFormBaru> {
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: TextField(
+                  controller: noKKController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: 'Nomor Kartu Keluarga',
@@ -96,6 +99,7 @@ class EntryFormBaruState extends State<EntryFormBaru> {
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: TextField(
+                  controller: namaController,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     labelText: 'Nama',
@@ -112,6 +116,7 @@ class EntryFormBaruState extends State<EntryFormBaru> {
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
                 child: TextField(
+                  controller: jkController,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     labelText: 'Jenis Kelamin',
@@ -133,8 +138,6 @@ class EntryFormBaruState extends State<EntryFormBaru> {
                       // tombol simpan
                       Expanded(
                         child: ElevatedButton(
-                          // color: Theme.of(context).primaryColorDark,
-                          // textColor: Theme.of(context).primaryColorLight,
                           child: Text(
                             'Save',
                           style: TextStyle(
@@ -146,14 +149,14 @@ class EntryFormBaruState extends State<EntryFormBaru> {
                           onPressed: () {
                             if (nik == null) {
                               Firestore.addItemWargaBaru(
-                                id: id.toString(),
+                                id: id,
                                 nik: nikController.text,
                                 noKK: noKKController.text,
                                 nama: namaController.text,
                                 jk: jkController.text);
                             } else {
                               Firestore.updateItemWargaBaru(
-                                uid: id.toString(),
+                                uid: id,
                                 nik: nikController.text,
                                 noKK: noKKController.text,
                                 nama: namaController.text,

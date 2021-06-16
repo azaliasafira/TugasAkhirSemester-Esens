@@ -59,6 +59,7 @@ flutter:
   assets:
      - images/packages.png
      - images/undefined.png
+     - images/login.jpg
      - images/1.jpg
      - images/2.jpg
      - images/3.jpeg

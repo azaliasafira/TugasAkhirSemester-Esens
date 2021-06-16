@@ -9,7 +9,7 @@ String email;
 String imageUrl;
 String id;
 
-Future<String> signInWithGoogle() async {
+Future<User> signInWithGoogle() async {
   await Firebase.initializeApp();
   final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
   final GoogleSignInAuthentication googleSignInAuthentication =
@@ -38,7 +38,7 @@ Future<String> signInWithGoogle() async {
     final User currentUser = _auth.currentUser;
     assert(user.uid == currentUser.uid);
     print('signInWithGoogle succeeded: $user');
-    return '$user';
+    return user;
   }
   return null;
 }

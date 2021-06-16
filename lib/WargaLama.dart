@@ -1,5 +1,3 @@
-// import 'package:esens/EntryFormLama.dart';
-// import 'package:esens/models/warga_lama.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esens/EntryFormLama.dart';
 import 'package:esens/models/warga_lama.dart';
@@ -18,9 +16,14 @@ class Wargalama extends StatefulWidget {
 class WargaLamaState extends State < Wargalama > {
   DbHelper dbHelper = DbHelper();
   int count = 0;
+  List<WargaL> wargalmList;
     @override
     Widget build(BuildContext context) {
       String warga = widget.id;
+      print (warga);
+      if (wargalmList == null) {
+      wargalmList = List<WargaL>();
+    }
       return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -34,20 +37,28 @@ class WargaLamaState extends State < Wargalama > {
             Expanded(
               child: firestoreList(warga),
             ),
-            Container(
-              child: FloatingActionButton(
-                backgroundColor: Colors.orange,
-                child: Text("Tambah Data Warga"),
-                onPressed: () async {
-                  var wrg = await navigateToEntryFormLama(
-                    context, null, null, null,null, warga, null);
-                }),
-            ),
           ]
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          var wrg = await navigateToEntryFormLama (
+          context, null, null, null,null, warga, null);
+
+          if (wrg != null) {
+              //TODO 2 Panggil Fungsi untuk Insert ke DB
+                  int result = await dbHelper.insertWargaLama(wrg);
+                  if (result > 0) {
+                  }
+                }
+        },
+        label: const Text('Tambah Data'),
+        icon: const Icon(Icons.add),
+        backgroundColor: Colors.orange,
         ),
       );
     }
-    Future < WargaL > navigateToEntryFormLama(BuildContext context, String nik, String noKK, String nama, String jk, String id, String docId) async {
+    Future < WargaL > navigateToEntryFormLama(BuildContext context, 
+    String nik, String noKK, String nama, String jk, String id, String docId) async {
       var result = await Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) {
           return EntryFormLama(nik, noKK, nama, jk, id, docId);
@@ -56,8 +67,9 @@ class WargaLamaState extends State < Wargalama > {
     }
     StreamBuilder firestoreList(String s) {
       TextStyle textStyle = Theme.of(context).textTheme.headline5;
+
       return StreamBuilder < QuerySnapshot > (
-        stream: Firestore.readItemWargaBaru(s),
+        stream: Firestore.readItemWargaLama(s),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Container(
@@ -96,6 +108,9 @@ class WargaLamaState extends State < Wargalama > {
                     onTap: () async {
                       var wrg = await navigateToEntryFormLama(context, nik, noKK, nama, 
                       jk, s, docID);
+                      int result = await dbHelper.updateWargaLama(wrg);
+                      if (result > 0) {
+                      }
                     },
                   ),
                 );
